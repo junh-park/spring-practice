@@ -9,15 +9,15 @@ import java.sql.SQLException;
 public class UserDao {
 	
 	public void add(User user) throws ClassNotFoundException, SQLException {
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection con = DriverManager.getConnection("jdbc:mysql://localhost/spring_toby", "root", "eltemia");
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/spring_toby?useTimezone=false&serverTimezone=UTC", "root", "eltemia");
 		
 		PreparedStatement ps = con.prepareStatement("insert into users(id, name, password) values(?,?,?)");
 		ps.setString(1, user.getId());
 		ps.setString(2, user.getName());
 		ps.setString(3, user.getPassword());
 		
-		ps.executeQuery();
+		ps.executeUpdate();
 		
 		ps.close();
 		con.close();
