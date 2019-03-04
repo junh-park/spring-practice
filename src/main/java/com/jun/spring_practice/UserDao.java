@@ -7,10 +7,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserDao {
+	private ConnectionMaker connectionMaker;
+	
+	public UserDao() {
+		connectionMaker = new DConnectionMaker();
+	}
 	
 	public void add(User user) throws ClassNotFoundException, SQLException {
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/spring_toby?useTimezone=false&serverTimezone=UTC", "root", "eltemia");
+		Connection con = connectionMaker.makeConnection();
 		
 		PreparedStatement ps = con.prepareStatement("insert into users(id, name, password) values(?,?,?)");
 		ps.setString(1, user.getId());
@@ -24,8 +28,7 @@ public class UserDao {
 	}
 	
 	public User get(String id) throws ClassNotFoundException, SQLException {
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection con = DriverManager.getConnection("jdbc:mysql://localhost/spring_toby", "root", "eltemia");
+		Connection con = connectionMaker.makeConnection();
 		
 		PreparedStatement ps = con.prepareStatement("select * from users where id = ?");
 		ps.setString(1, id);
@@ -43,5 +46,4 @@ public class UserDao {
 		
 		return user;
 	}
-	
 }
