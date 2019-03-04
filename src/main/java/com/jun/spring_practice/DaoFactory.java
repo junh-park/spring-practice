@@ -20,7 +20,7 @@ public class DaoFactory {
 	}
 
 	@Bean
-	private DConnectionMaker connectionMaker() {
+	public DConnectionMaker connectionMaker() {
 		return new DConnectionMaker();
 	}
 
