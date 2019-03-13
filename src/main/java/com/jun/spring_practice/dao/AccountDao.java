@@ -1,4 +1,6 @@
-package com.jun.spring_practice;
+package com.jun.spring_practice.dao;
+
+import com.jun.spring_practice.connectionmaker.ConnectionMaker;
 
 public class AccountDao{
 
