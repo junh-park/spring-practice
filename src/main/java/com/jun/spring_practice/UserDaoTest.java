@@ -4,6 +4,9 @@ import java.sql.SQLException;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import com.jun.spring_practice.dao.UserDao;
+import com.jun.spring_practice.entity.User;
+
 public class UserDaoTest {
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {

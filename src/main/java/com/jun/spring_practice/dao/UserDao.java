@@ -1,4 +1,4 @@
-package com.jun.spring_practice;
+package com.jun.spring_practice.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,10 +6,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.jun.spring_practice.connectionmaker.ConnectionMaker;
+import com.jun.spring_practice.entity.User;
+
 public class UserDao {
 	private ConnectionMaker connectionMaker;
 	
-	public UserDao(ConnectionMaker connectionMaker) {
+	public UserDao() {}
+	
+	public void setConnectionMaker(ConnectionMaker connectionMaker) {
 		this.connectionMaker = connectionMaker;
 	}
 	
