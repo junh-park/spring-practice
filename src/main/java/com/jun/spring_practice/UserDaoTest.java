@@ -10,7 +10,7 @@ public class UserDaoTest {
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
 		UserDao dao = context.getBean("userDao", UserDao.class);
 		User user = new User("whiteship", "jun", "married");
-		
+			
 		dao.add(user);
 		
 		System.out.println(user.getId()+" added successfully");

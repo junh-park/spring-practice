@@ -1,5 +1,6 @@
 package com.jun.spring_practice;
 
+
 public class User {
 
 	String id;
