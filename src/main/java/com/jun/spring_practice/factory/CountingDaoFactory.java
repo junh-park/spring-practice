@@ -1,4 +1,4 @@
-package com.jun.spring_practice;
+package com.jun.spring_practice.factory;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

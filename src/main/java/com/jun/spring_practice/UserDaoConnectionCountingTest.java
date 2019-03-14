@@ -7,6 +7,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import com.jun.spring_practice.connectionmaker.CountingConnectionMaker;
 import com.jun.spring_practice.dao.UserDao;
 import com.jun.spring_practice.entity.User;
+import com.jun.spring_practice.factory.CountingDaoFactory;
 
 public class UserDaoConnectionCountingTest {
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {

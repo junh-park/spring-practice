@@ -1,4 +1,4 @@
-package com.jun.spring_practice.connectionmaker;
+package com.jun.spring_practice.datasource;
 
 import java.sql.Connection;
 import java.sql.SQLException;

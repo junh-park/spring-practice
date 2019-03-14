@@ -1,4 +1,4 @@
-package com.jun.spring_practice;
+package com.jun.spring_practice.factory;
 
 import javax.sql.DataSource;
 
@@ -22,17 +22,29 @@ public class DaoFactory {
 		return userDao;
 	}
 	
+//	@Bean
+//	public DataSource dataSource() {
+//		SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
+//		dataSource.setDriverClass(oracle.jdbc.driver.OracleDriver.class);
+//		dataSource.setUrl("jdbc:oracle:thin:@localhost:1521:xe");
+//		dataSource.setUsername("Trainee1");
+//		dataSource.setPassword("!QAZSE4");
+//		
+//		return dataSource;
+//	}
+	
 	@Bean
 	public DataSource dataSource() {
 		SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
 		
-		dataSource.setDriverClass(oracle.jdbc.driver.OracleDriver.class);
-		dataSource.setUrl("jdbc:oracle:thin:@localhost:1521:xe");
-		dataSource.setUsername("Trainee1");
-		dataSource.setPassword("!QAZSE4");
+		dataSource.setDriverClass(com.mysql.cj.jdbc.Driver.class);
+		dataSource.setUrl("jdbc:mysql://localhost:3306/spring_toby");
+		dataSource.setUsername("root");
+		dataSource.setPassword("eltemia");
 		
 		return dataSource;
 	}
+	
 	
 	public MessageDao messageDao() {
 		return new MessageDao(connectionMaker());
@@ -46,6 +58,5 @@ public class DaoFactory {
 	public OConnectionMaker connectionMaker() {
 		return new OConnectionMaker();
 	}
-	
 
 }
