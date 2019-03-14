@@ -2,7 +2,8 @@ package com.jun.spring_practice;
 
 import java.sql.SQLException;
 
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.GenericXmlApplicationContext;
 
 import com.jun.spring_practice.dao.UserDao;
 import com.jun.spring_practice.entity.User;
@@ -10,7 +11,7 @@ import com.jun.spring_practice.entity.User;
 public class UserDaoTest {
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
-		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
+ 		GenericXmlApplicationContext context = new GenericXmlApplicationContext("applicationContext.xml");
 		UserDao dao = context.getBean("userDao", UserDao.class);
 		User user = new User("whiteship", "jun", "married");
 			
@@ -22,5 +23,6 @@ public class UserDaoTest {
 		
 		System.out.println(user2.getName());
 		System.out.println(user2.getPassword());
+		context.close();
 	}
 }

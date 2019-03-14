@@ -14,7 +14,7 @@ public class CountingDaoFactory {
 	@Bean
 	public UserDao userDao() {
 		UserDao userDao = new UserDao();
-		userDao.setConnectionMaker(connectionMaker());
+//		userDao.setDataSource(dataSource);;
 		return userDao;
 	}
 

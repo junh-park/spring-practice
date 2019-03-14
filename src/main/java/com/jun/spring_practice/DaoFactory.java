@@ -1,7 +1,10 @@
 package com.jun.spring_practice;
 
+import javax.sql.DataSource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
 import com.jun.spring_practice.connectionmaker.MConnectionMaker;
 import com.jun.spring_practice.connectionmaker.OConnectionMaker;
@@ -15,8 +18,20 @@ public class DaoFactory {
 	@Bean
 	public UserDao userDao() {
 		UserDao userDao = new UserDao();
-		userDao.setConnectionMaker(connectionMaker());
+		userDao.setDataSource(dataSource());
 		return userDao;
+	}
+	
+	@Bean
+	public DataSource dataSource() {
+		SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
+		
+		dataSource.setDriverClass(oracle.jdbc.driver.OracleDriver.class);
+		dataSource.setUrl("jdbc:oracle:thin:@localhost:1521:xe");
+		dataSource.setUsername("Trainee1");
+		dataSource.setPassword("!QAZSE4");
+		
+		return dataSource;
 	}
 	
 	public MessageDao messageDao() {
@@ -28,8 +43,8 @@ public class DaoFactory {
 	}
 
 	@Bean
-	public MConnectionMaker connectionMaker() {
-		return new MConnectionMaker();
+	public OConnectionMaker connectionMaker() {
+		return new OConnectionMaker();
 	}
 	
 
