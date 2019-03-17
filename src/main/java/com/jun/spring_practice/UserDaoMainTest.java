@@ -8,7 +8,7 @@ import org.springframework.context.support.GenericXmlApplicationContext;
 import com.jun.spring_practice.dao.UserDao;
 import com.jun.spring_practice.entity.User;
 
-public class UserDaoTest {
+public class UserDaoMainTest {
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
  		GenericXmlApplicationContext context = new GenericXmlApplicationContext("applicationContext.xml");
