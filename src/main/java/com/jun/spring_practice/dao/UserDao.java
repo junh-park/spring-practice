@@ -9,46 +9,54 @@ import javax.sql.DataSource;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 
+import com.jun.spring_practice.daostrategy.StatementStrategy;
 import com.jun.spring_practice.entity.User;
 
 public class UserDao {
 	private DataSource dataSource;
-
+	private JdbcContext jdbcContext;
+	
 	public UserDao() {
+	}
+
+	public void setJdbcContext(JdbcContext jdbcContext) {
+		this.jdbcContext = jdbcContext;
 	}
 
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
 
-	public void add(User user) throws SQLException {
-		Connection con = null;
-		PreparedStatement ps = null;
+	public void add(final User user) throws SQLException {
 
-		try {
-			con = dataSource.getConnection();
-			ps = con.prepareStatement("insert into users(id, name, password) values(?,?,?)");
-			ps.setString(1, user.getId());
-			ps.setString(2, user.getName());
-			ps.setString(3, user.getPassword());
+		this.jdbcContext.workWithStatementStrategy(new StatementStrategy() {
+			// class AddStatement implements StatementStrategy {
+			// private User user;
 
-			ps.executeUpdate();
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (Exception e) {
-				}
+			// public AddStatement(User user) {
+			// this.user = user;
+			// }
+
+			@Override
+			public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
+				PreparedStatement ps = c.prepareStatement("insert into users(id, name, password) values(?,?,?)");
+				ps.setString(1, user.getId());
+				ps.setString(2, user.getName());
+				ps.setString(3, user.getPassword());
+
+				return ps;
 			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-				}
+			// }
+		});
+	}
+
+	public void deleteAll() throws SQLException {
+		this.jdbcContext.workWithStatementStrategy(new StatementStrategy() {
+			@Override
+			public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
+				return c.prepareStatement("delete from users");
 			}
-		}
+		});
 	}
 
 	public User get(String id) throws ClassNotFoundException, SQLException {
@@ -100,36 +108,6 @@ public class UserDao {
 		return user;
 	}
 
-	public void deleteAll() throws SQLException {
-		Connection con = null;
-		PreparedStatement stat = null;
-
-		try {
-			con = dataSource.getConnection();
-			stat = con.prepareStatement("delete from users");
-			stat.executeUpdate();
-		} catch (SQLException e) {
-			throw e;
-		} finally {
-
-			if (stat != null) {
-				try {
-					stat.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					// TODO: handle exception
-				}
-			}
-		}
-	}
-
 	public int getCount() throws SQLException {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -166,4 +144,5 @@ public class UserDao {
 			}
 		}
 	}
+
 }

@@ -14,6 +14,10 @@
 		<property name="username" value="Trainee1" />
 		<property name="password" value="!QAZSE4" />
 	</bean>
+	
+	<bean id="jdbcContext" class="com.jun.spring_practice.dao.JdbcContext">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
 
 <!-- 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
@@ -28,6 +32,7 @@
  -->
 	<bean id="userDao" class="com.jun.spring_practice.dao.UserDao">
 		<property name="dataSource" ref="dataSource" />
+		<property name="jdbcContext" ref="jdbcContext" />
 	</bean>
 
 </beans>
