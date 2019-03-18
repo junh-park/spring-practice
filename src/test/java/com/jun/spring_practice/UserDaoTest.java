@@ -18,7 +18,7 @@ import com.jun.spring_practice.dao.UserDao;
 import com.jun.spring_practice.entity.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations="/test-applicationContext.xml")
+@ContextConfiguration(locations="/applicationContext.xml")
 public class UserDaoTest {
 
 	@Autowired
