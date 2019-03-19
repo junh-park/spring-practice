@@ -34,7 +34,7 @@ public class UserDaoTest {
 		this.user3 = new User("bumji", "park", "springno3");
 	}
 
-	@Test
+	@Test 
 	public void addAndGet() throws SQLException, ClassNotFoundException {
 		dao.deleteAll();
 		assertThat(dao.getCount(), is(0));

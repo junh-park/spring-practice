@@ -9,13 +9,13 @@ import javax.sql.DataSource;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 
-import com.jun.spring_practice.daostrategy.StatementStrategy;
 import com.jun.spring_practice.entity.User;
 
 public class UserDao {
 	private DataSource dataSource;
 	private JdbcContext jdbcContext;
-	
+
+
 	public UserDao() {
 	}
 
@@ -27,35 +27,21 @@ public class UserDao {
 
 	public void add(final User user) throws SQLException {
 
-		this.jdbcContext.workWithStatementStrategy(new StatementStrategy() {
-			// class AddStatement implements StatementStrategy {
-			// private User user;
+		this.jdbcContext.workWithStatementStrategy(c -> {
+			PreparedStatement ps = c.prepareStatement("insert into users(id, name, password) values(?,?,?)");
+			ps.setString(1, user.getId());
+			ps.setString(2, user.getName());
+			ps.setString(3, user.getPassword());
 
-			// public AddStatement(User user) {
-			// this.user = user;
-			// }
-
-			@Override
-			public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
-				PreparedStatement ps = c.prepareStatement("insert into users(id, name, password) values(?,?,?)");
-				ps.setString(1, user.getId());
-				ps.setString(2, user.getName());
-				ps.setString(3, user.getPassword());
-
-				return ps;
-			}
-			// }
+			return ps;
 		});
 	}
 
 	public void deleteAll() throws SQLException {
-		this.jdbcContext.workWithStatementStrategy(new StatementStrategy() {
-			@Override
-			public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
-				return c.prepareStatement("delete from users");
-			}
-		});
+		this.jdbcContext.executeSql("delete from users");
 	}
+
+
 
 	public User get(String id) throws ClassNotFoundException, SQLException {
 		Connection con = null;
