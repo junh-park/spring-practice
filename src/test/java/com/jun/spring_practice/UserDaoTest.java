@@ -41,7 +41,7 @@ public class UserDaoTest {
 
 		dao.add(user1);
 		dao.add(user2);
-
+ 
 		assertThat(dao.getCount(), is(2));
 
 		User user4 = dao.get(user1.getId());
