@@ -14,7 +14,11 @@ public class JdbcContext {
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
-	
+
+	public void executeSql(final String query) throws SQLException {
+		workWithStatementStrategy(c -> c.prepareStatement(query));
+	}
+
 	public void workWithStatementStrategy(StatementStrategy stmt) throws SQLException {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -44,4 +48,3 @@ public class JdbcContext {
 		}
 	}
 }
- 
