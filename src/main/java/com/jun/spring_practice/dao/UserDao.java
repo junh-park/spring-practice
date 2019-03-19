@@ -9,10 +9,10 @@ import javax.sql.DataSource;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 
-import com.jun.spring_practice.daostrategy.StatementStrategy;
 import com.jun.spring_practice.entity.User;
 
 public class UserDao {
+
 	private DataSource dataSource;
 	private JdbcContext jdbcContext;
 
@@ -22,27 +22,16 @@ public class UserDao {
 	public void setDataSource(DataSource dataSource) {
 		this.jdbcContext = new JdbcContext();
 		jdbcContext.setDataSource(dataSource);
-
 		this.dataSource = dataSource;
 	}
 
 	public void add(final User user) throws SQLException {
-
-		this.jdbcContext.workWithStatementStrategy(c -> {
-			PreparedStatement ps = c.prepareStatement("insert into users(id, name, password) values(?,?,?)");
-			ps.setString(1, user.getId());
-			ps.setString(2, user.getName());
-			ps.setString(3, user.getPassword());
-
-			return ps;
-		});
+		jdbcContext.executeUpdateSql("insert into users(id, name, password) values(?,?,?)", user);
 	}
 
 	public void deleteAll() throws SQLException {
-		this.jdbcContext.executeSql("delete from users");
+		jdbcContext.executeUpdateSql("delete from users");
 	}
-
-
 
 	public User get(String id) throws ClassNotFoundException, SQLException {
 		Connection con = null;
@@ -64,6 +53,11 @@ public class UserDao {
 				user.setName(rs.getString("name"));
 				user.setPassword(rs.getString("password"));
 			}
+
+			if (user == null) {
+				throw new EmptyResultDataAccessException(1);
+			}
+			return user;
 		} catch (SQLException e) {
 			throw e;
 		} finally {
@@ -86,11 +80,6 @@ public class UserDao {
 				}
 			}
 		}
-
-		if (user == null) {
-			throw new EmptyResultDataAccessException(1);
-		}
-		return user;
 	}
 
 	public int getCount() throws SQLException {

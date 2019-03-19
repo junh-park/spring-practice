@@ -8,19 +8,15 @@ import java.io.IOException;
 public class Calculator {
 
 	public Integer calcSum(String filePath) throws IOException {
-		BufferedReaderCallback callback = new BufferedReaderCallback() {
+		BufferedReaderCallback callback = br -> {
+			Integer sum = 0;
+			String line = null;
 
-			@Override
-			public Integer doSomethingWithReader(BufferedReader br) throws IOException {
-				Integer sum = 0;
-				String line = null;
-
-				while ((line = br.readLine()) != null) {
-					sum += Integer.valueOf(line);
-				}
-
-				return sum;
+			while ((line = br.readLine()) != null) {
+				sum += Integer.valueOf(line);
 			}
+
+			return sum;
 		};
 
 		return fileReadTemplate(filePath, callback);

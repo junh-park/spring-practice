@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 import com.jun.spring_practice.daostrategy.StatementStrategy;
+import com.jun.spring_practice.entity.User;
 
 public class JdbcContext {
 	private DataSource dataSource;
@@ -15,8 +16,20 @@ public class JdbcContext {
 		this.dataSource = dataSource;
 	}
 
-	public void executeSql(final String query) throws SQLException {
+	public void executeUpdateSql(final String query) throws SQLException {
 		workWithStatementStrategy(c -> c.prepareStatement(query));
+	}
+	
+	public void executeUpdateSql(final String query, final User user) throws SQLException {
+		workWithStatementStrategy(c -> {
+			PreparedStatement ps = c.prepareStatement(query);
+			
+			ps.setString(1, user.getId());
+			ps.setString(2, user.getName());
+			ps.setString(3, user.getPassword());
+
+			return ps; 
+		});
 	}
 
 	public void workWithStatementStrategy(StatementStrategy stmt) throws SQLException {
@@ -35,7 +48,7 @@ public class JdbcContext {
 
 			if (ps != null) {
 				try {
-					ps.close();
+					ps.close(); 
 				} catch (SQLException e) {
 				}
 			}

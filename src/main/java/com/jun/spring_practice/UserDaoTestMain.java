@@ -1,13 +1,7 @@
 package com.jun.spring_practice;
 
-import java.sql.SQLException;
-
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
-
-import com.jun.spring_practice.dao.UserDao;
-import com.jun.spring_practice.entity.User;
 
 public class UserDaoTestMain {
 
